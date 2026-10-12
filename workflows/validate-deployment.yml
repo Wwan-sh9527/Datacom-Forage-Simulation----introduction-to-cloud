@@ -19,17 +19,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Display deployment plan
-        run: |
-          echo "Starting Datacom cloud deployment validation..."
-          cat deployment/deployment-plan.yml
-
-      - name: Validate required security controls
-        run: |
-          grep -q "principle_of_least_privilege: true" deployment/deployment-plan.yml
-          grep -q "public_ip_access: disabled" deployment/deployment-plan.yml
-          grep -q "managed_identity: enabled" deployment/deployment-plan.yml
-          echo "Security controls validated successfully."
+      - name: Run security validation script
+        run: bash scripts/validate-deployment.sh
 
       - name: Complete
         run: |
