@@ -35,19 +35,21 @@ Key concepts:
 
 ### Task 2 – GitHub Actions Workflow
 
-Create a GitHub Actions workflow to automate part of the application deployment process.
+Implemented a GitHub Actions CI workflow that automatically validates a cloud deployment plan whenever changes are pushed to the `main` branch or submitted through a pull request.
 
-Technologies:
+The workflow:
 
-- GitHub
+- Checks out the repository source code
+- Reads the cloud deployment configuration
+- Validates core security controls, including least privilege, disabled public IP access, and managed identity
+- Confirms that the configuration is intended for validation only and does not provision Azure resources
+
+This demonstrates how CI/CD automation can help enforce baseline cloud-security requirements before infrastructure is deployed.
+
+Technologies used:
+
 - GitHub Actions
 - YAML
+- Linux shell commands
 - CI/CD
-
-## Learning Objectives
-
-Through this project, I am developing practical experience with cloud engineering, automation, DevOps workflows, and cloud security principles.
-
-## Disclaimer
-
-This repository contains work completed as part of the Datacom Job Simulation hosted on Forage for educational purposes.
+- Infrastructure configuration validation
