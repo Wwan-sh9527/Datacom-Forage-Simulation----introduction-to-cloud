@@ -1,1 +1,30 @@
 
+application:
+  name: wcd-bank-contractor-portal
+  environment: development
+  owner: cloud-engineering-team
+
+compute:
+  service: Azure Virtual Machine
+  operating_system: Ubuntu 22.04 LTS
+  vm_size: Standard_B1s
+  auto_shutdown: enabled
+
+security:
+  principle_of_least_privilege: true
+  public_ip_access: disabled
+  managed_identity: enabled
+  authentication: Microsoft Entra ID
+  allowed_access_group: contractor-support-team
+
+network:
+  virtual_network: wcd-bank-dev-vnet
+  subnet: contractor-workload-subnet
+  network_security_group: nsg-contractor-portal
+  inbound_access:
+    - HTTPS_443_only
+
+deployment:
+  method: GitHub Actions
+  validation_only: true
+  note: "This simulation validates a deployment plan only and does not create Azure resources."
