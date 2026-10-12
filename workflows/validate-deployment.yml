@@ -1,0 +1,37 @@
+name: Validate Cloud Deployment Plan
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate deployment configuration
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Display deployment plan
+        run: |
+          echo "Starting Datacom cloud deployment validation..."
+          cat deployment/deployment-plan.yml
+
+      - name: Validate required security controls
+        run: |
+          grep -q "principle_of_least_privilege: true" deployment/deployment-plan.yml
+          grep -q "public_ip_access: disabled" deployment/deployment-plan.yml
+          grep -q "managed_identity: enabled" deployment/deployment-plan.yml
+          echo "Security controls validated successfully."
+
+      - name: Complete
+        run: |
+          echo "Deployment plan passed validation."
+          echo "No Azure resources were created by this workflow."
